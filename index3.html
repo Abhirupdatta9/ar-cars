@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Car Customizer</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        /* Basic styling for the body and container */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Style the model viewer element */
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0; /* Light gray background */
+        }
+
+        /* Styling for the customization controls */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls h4 {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+        }
+
+        .controls .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .controls .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Styling for the buttons */
+        .color-button, .wheels-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Add hover effect to the buttons */
+        .color-button:hover, .wheels-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Specific colors for the color buttons */
+        .color-button[data-color="#ff0000"] { background-color: #ff0000; }
+        .color-button[data-color="#0000ff"] { background-color: #0000ff; }
+        .color-button[data-color="#cccccc"] { background-color: #cccccc; }
+
+        /* Images for the wheels buttons - you would need to create these or use your own */
+        .wheels-button[data-wheels="style1"] { background: url('https://via.placeholder.com/40/0000FF/FFFFFF?text=W1') no-repeat center center/cover; }
+        .wheels-button[data-wheels="style2"] { background: url('https://via.placeholder.com/40/008000/FFFFFF?text=W2') no-repeat center center/cover; }
+        .wheels-button[data-wheels="style3"] { background: url('https://via.placeholder.com/40/FF0000/FFFFFF?text=W3') no-repeat center center/cover; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <model-viewer 
+            id="car-model"
+            src="car.glb" 
+            alt="A 3D model of a car"
+            ar 
+            ar-modes="webxr scene-viewer"
+            shadow-intensity="1"
+            camera-controls 
+            touch-action="pan-y"
+            environment-image="legacy"
+        >
+        </model-viewer>
+
+        <div class="controls">
+            <div class="control-group">
+                <h4>Color</h4>
+                <div class="button-group">
+                    <button class="color-button" data-color="#ff0000"></button> <button class="color-button" data-color="#0000ff"></button> <button class="color-button" data-color="#cccccc"></button> </div>
+            </div>
+
+            <div class="control-group">
+                <h4>Wheels</h4>
+                <div class="button-group">
+                    <button class="wheels-button" data-wheels="style1"></button>
+                    <button class="wheels-button" data-wheels="style2"></button>
+                    <button class="wheels-button" data-wheels="style3"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the model viewer element
+        const modelViewer = document.getElementById('car-model');
+
+        // Handle color changes
+        document.querySelectorAll('.color-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const color = button.getAttribute('data-color');
+                // Use a hypothetical 'setColor' function on the model viewer
+                // This part requires your 3D model to be set up with materials that can be changed.
+                // For a beginner, this is the most complex part. A real implementation would look something like this:
+                // modelViewer.model.materials[0].pbrMetallicRoughness.baseColorFactor = [R, G, B, A];
+                // For simplicity and demonstration, we'll just log the color change.
+                console.log(`Color changed to: ${color}`);
+                // In a real-world scenario, you would have to target the specific material of the car body in your model and change its color.
+                // Example:
+                // const carBodyMaterial = modelViewer.model.materials.find(mat => mat.name === 'CarBody');
+                // if (carBodyMaterial) {
+                //     carBodyMaterial.pbrMetallicRoughness.setBaseColorFactor(color);
+                // }
+            });
+        });
+
+        // Handle wheels changes
+        document.querySelectorAll('.wheels-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const wheelStyle = button.getAttribute('data-wheels');
+                // For wheel variants, you would set a specific variant name.
+                // This requires your model to have pre-defined variants for the wheels.
+                // The variant names would match the `data-wheels` attributes.
+                // modelViewer.variantName = wheelStyle;
+                console.log(`Wheels style changed to: ${wheelStyle}`);
+                // In a real-world scenario, you would have a function that changes the wheel model or material.
+                // Example:
+                // modelViewer.model.variants[wheelStyle].apply();
+            });
+        });
+
+    </script>
+</body>
+</html>

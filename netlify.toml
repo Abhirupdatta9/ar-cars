@@ -1,0 +1,6 @@
+[[headers]]
+  for = "/*" # Apply to all paths, or specify a more targeted path like "/assets/"
+  [headers.values]
+    Access-Control-Allow-Origin = "*" # Allows requests from any origin. For more security, replace "" with your specific domain(s).
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
